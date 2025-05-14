@@ -4,6 +4,7 @@ import Dashboard from './pages/Dashboard';
 import EmployeeList from './pages/EmployeeList';
 import AddEmployee from './pages/AddEmployee';
 import EditEmployee from './pages/EditEmployee';
+import Departments from './pages/Departments';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import NoPage from './pages/NoPage';
@@ -30,6 +31,7 @@ const AppRoutes = ({ isAuthenticated, user, setIsAuthenticated, setUser }) => {
           <Route path="/employees" element={<EmployeeList />} />
           <Route path="/add-employee" element={<AddEmployee />} />
           <Route path="/edit-employee/:id" element={<EditEmployee />} />
+          <Route path="/departments" element={<Departments />} />
           <Route path="/profile" element={<ProfileSettings user={user} setUser={setUser} />} />
         </>
       ) : (

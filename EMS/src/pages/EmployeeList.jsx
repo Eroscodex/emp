@@ -86,70 +86,95 @@ const EmployeeList = () => {
   }
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <h1 style={{ textAlign: 'center', color: '#333' }}>Employee List</h1>
-      <SearchBar onSearch={handleSearch} />
-      <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '20px' }}>
-        <thead>
-          <tr style={{ backgroundColor: '#f4f4f4', textAlign: 'left' }}>
-            <th style={{ padding: '10px', border: '1px solid #ddd' }}>ID</th>
-            <th style={{ padding: '10px', border: '1px solid #ddd' }}>Name</th>
-            <th style={{ padding: '10px', border: '1px solid #ddd' }}>Email</th>
-            <th style={{ padding: '10px', border: '1px solid #ddd' }}>Phone</th>
-            <th style={{ padding: '10px', border: '1px solid #ddd' }}>Department</th>
-            <th style={{ padding: '10px', border: '1px solid #ddd' }}>Position</th>
-            <th style={{ padding: '10px', border: '1px solid #ddd' }}>Hire Date</th>
-            <th style={{ padding: '10px', border: '1px solid #ddd' }}>Salary</th>
-            <th style={{ padding: '10px', border: '1px solid #ddd' }}>Status</th>
-            <th style={{ padding: '10px', border: '1px solid #ddd' }}>Profile Image</th>
-            <th style={{ padding: '10px', border: '1px solid #ddd' }}>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {employees.map((employee) => (
-            <tr key={employee.id} style={{ borderBottom: '1px solid #ddd' }}>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>{employee.id}</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>{employee.name}</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>{employee.email}</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>{employee.phone || 'N/A'}</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>{employee.department_name}</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>{employee.position}</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>
-                {new Date(employee.hire_date).toLocaleDateString()}
-              </td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>
-                {employee.salary ? `$${employee.salary}` : 'N/A'}
-              </td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>{employee.status}</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>
-                {employee.profile_image ? (
-                  <img
-                    src={`http://localhost/FINAL%20PROJECT/EMS_BACKEND/uploads/${employee.profile_image}`}
-                    alt="Profile"
-                    style={{ width: '50px', height: '50px', borderRadius: '50%' }}
-                  />
-                ) : (
-                  'No Image'
-                )}
-              </td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>
-                <button
-                  onClick={() => navigate(`/edit-employee/${employee.id}`)}
-                  className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600"
+    <div className="p-4 sm:p-8 min-h-screen bg-gradient-to-br from-gray-100 to-blue-100 font-sans">
+      <div className="max-w-7xl mx-auto bg-white rounded-2xl shadow-xl p-4 sm:p-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-center text-blue-900 mb-6 tracking-wide">
+          Employee List
+        </h1>
+        <div className="mb-6">
+          <SearchBar onSearch={handleSearch} />
+        </div>
+        <div className="overflow-x-auto rounded-lg shadow">
+          <table className="min-w-full bg-white border border-gray-200 text-sm sm:text-base">
+            <thead>
+              <tr className="bg-blue-50 text-left">
+                <th className="py-3 px-2 sm:px-4 border-b font-semibold text-gray-700">ID</th>
+                <th className="py-3 px-2 sm:px-4 border-b font-semibold text-gray-700">Name</th>
+                <th className="py-3 px-2 sm:px-4 border-b font-semibold text-gray-700">Email</th>
+                <th className="py-3 px-2 sm:px-4 border-b font-semibold text-gray-700">Phone</th>
+                <th className="py-3 px-2 sm:px-4 border-b font-semibold text-gray-700">Department</th>
+                <th className="py-3 px-2 sm:px-4 border-b font-semibold text-gray-700">Position</th>
+                <th className="py-3 px-2 sm:px-4 border-b font-semibold text-gray-700">Hire Date</th>
+                <th className="py-3 px-2 sm:px-4 border-b font-semibold text-gray-700">Salary</th>
+                <th className="py-3 px-2 sm:px-4 border-b font-semibold text-gray-700">Status</th>
+                <th className="py-3 px-2 sm:px-4 border-b font-semibold text-gray-700">Profile Image</th>
+                <th className="py-3 px-2 sm:px-4 border-b font-semibold text-gray-700">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {employees.map((employee) => (
+                <tr
+                  key={employee.id}
+                  className="hover:bg-blue-50 transition-colors border-b last:border-b-0"
                 >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(employee.id)}
-                  className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 ml-2"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  <td className="py-2 px-2 sm:px-4">{employee.id}</td>
+                  <td className="py-2 px-2 sm:px-4">{employee.name}</td>
+                  <td className="py-2 px-2 sm:px-4">{employee.email}</td>
+                  <td className="py-2 px-2 sm:px-4">{employee.phone || 'N/A'}</td>
+                  <td className="py-2 px-2 sm:px-4">{employee.department_name}</td>
+                  <td className="py-2 px-2 sm:px-4">{employee.position}</td>
+                  <td className="py-2 px-2 sm:px-4">
+                    {new Date(employee.hire_date).toLocaleDateString()}
+                  </td>
+                  <td className="py-2 px-2 sm:px-4">
+                    {employee.salary ? (
+                      <span className="text-green-700 font-semibold">₱{employee.salary}</span>
+                    ) : (
+                      'N/A'
+                    )}
+                  </td>
+                  <td className="py-2 px-2 sm:px-4">
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                        employee.status === 'Active'
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-red-100 text-red-700'
+                      }`}
+                    >
+                      {employee.status}
+                    </span>
+                  </td>
+                  <td className="py-2 px-2 sm:px-4">
+                    {employee.profile_image ? (
+                      <img
+                        src={`http://localhost/FINAL%20PROJECT/EMS_BACKEND/uploads/${employee.profile_image}`}
+                        alt="Profile"
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border border-gray-200 shadow"
+                      />
+                    ) : (
+                      <span className="text-gray-400">No Image</span>
+                    )}
+                  </td>
+                  <td className="py-2 px-2 sm:px-4 flex flex-col sm:flex-row gap-2">
+                    <button
+                      onClick={() => navigate(`/edit-employee/${employee.id}`)}
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded transition text-xs sm:text-sm"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(employee.id)}
+                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded transition text-xs sm:text-sm"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };

@@ -30,16 +30,36 @@ function sanitize_input($data) {
     return htmlspecialchars(strip_tags(trim($data)));
 }
 
-// Function to validate user token
 function validateToken() {
     global $pdo;
-    $headers = getallheaders();
-    if (!isset($headers['Authorization'])) {
+
+    // Try to get headers in a way that works on all servers
+    if (function_exists('getallheaders')) {
+        $headers = getallheaders();
+    } else {
+        $headers = [];
+        foreach ($_SERVER as $name => $value) {
+            if (substr($name, 0, 5) == 'HTTP_') {
+                $key = str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))));
+                $headers[$key] = $value;
+            }
+        }
+    }
+
+    // Support both 'Authorization' and 'authorization'
+    $authHeader = null;
+    if (isset($headers['Authorization'])) {
+        $authHeader = $headers['Authorization'];
+    } elseif (isset($headers['authorization'])) {
+        $authHeader = $headers['authorization'];
+    }
+
+    if (!$authHeader) {
         error_log('Authorization header missing');
         throw new Exception('No token provided');
     }
 
-    $token = str_replace('Bearer ', '', $headers['Authorization']);
+    $token = str_replace('Bearer ', '', $authHeader);
     error_log('Received token: ' . $token);
 
     $decoded = json_decode(base64_decode($token), true);

@@ -9,6 +9,7 @@ import NoPage from './pages/NoPage';
 import ProfileSettings from './pages/ProfileSettings';
 import AddEmployee from './pages/AddEmployee';
 import EditEmployee from './pages/EditEmployee';
+import Departments from './pages/Departments';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -83,6 +84,7 @@ const App = () => {
               <Route path="/employees" element={<EmployeeList />} />
               <Route path="/add-employee" element={<AddEmployee />} />
               <Route path="/edit-employee/:id" element={<EditEmployee />} />
+              <Route path="/departments" element={<Departments />} />
             </>
           )}
 

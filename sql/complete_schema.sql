@@ -79,5 +79,3 @@ INSERT INTO activity_logs (user_id, action, description, ip_address, created_at)
 (1, 'Added employee', 'Added John Doe to IT department', '127.0.0.1', NOW()),
 (1, 'Added employee', 'Added Jane Smith to HR department', '127.0.0.1', NOW()),
 (1, 'Updated employee', 'Updated Jane Smith\'s position to HR Manager', '127.0.0.1', NOW());
-
-ALTER TABLE employees AUTO_INCREMENT = 1;

@@ -11,15 +11,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once __DIR__ . '/../db.php';
 
-$user = validateToken();
 
-if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
-    http_response_code(405);
-    echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+try {
+    $user = validateToken();
+} catch (Exception $e) {
+    http_response_code(401);
+    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
     exit;
 }
-
-$employee_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
 try {
     $pdo->beginTransaction();
@@ -34,6 +33,9 @@ try {
     $stmt->execute([$employee_id]);
 
     if ($stmt->rowCount() > 0) {
+        // Reset auto-increment to the next available ID
+        $pdo->exec("ALTER TABLE employees AUTO_INCREMENT = 1;");
+
         // Log activity
         $stmt = $pdo->prepare("INSERT INTO activity_logs (user_id, action, ip_address) VALUES (?, ?, ?)");
         $stmt->execute([$user['id'], "Deleted employee: " . $employee['name'], $_SERVER['REMOTE_ADDR']]);

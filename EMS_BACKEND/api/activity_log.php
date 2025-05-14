@@ -12,13 +12,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once __DIR__ . '/../db.php';
 
-// Validate user token
-$user = validateToken();
-
-// Update permission check for HR
-if (!isset($user['role']) || $user['role'] !== 'hr') {
-    http_response_code(403);
-    echo json_encode(['success' => false, 'message' => 'Access restricted to HR personnel']);
+try {
+    $user = validateToken();
+} catch (Exception $e) {
+    http_response_code(401);
+    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
     exit;
 }
 

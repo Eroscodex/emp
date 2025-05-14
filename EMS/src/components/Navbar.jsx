@@ -43,14 +43,24 @@ const Navbar = ({ user, onLogout }) => {
                                     Employees
                                 </Link>
                                 {user.role === 'admin' && (
-                                    <Link to="/add-employee" 
-                                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                                            isActive('/add-employee') 
-                                                ? 'bg-blue-50 text-blue-600' 
-                                                : 'text-gray-600 hover:bg-gray-50'
-                                        }`}>
-                                        Add Employee
-                                    </Link>
+                                    <>
+                                        <Link to="/add-employee" 
+                                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                                isActive('/add-employee') 
+                                                    ? 'bg-blue-50 text-blue-600' 
+                                                    : 'text-gray-600 hover:bg-gray-50'
+                                            }`}>
+                                            Add Employee
+                                        </Link>
+                                        <Link to="/departments" 
+                                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                                isActive('/departments') 
+                                                    ? 'bg-blue-50 text-blue-600' 
+                                                    : 'text-gray-600 hover:bg-gray-50'
+                                            }`}>
+                                            Departments
+                                        </Link>
+                                    </>
                                 )}
                             </div>
 
@@ -110,9 +120,14 @@ const Navbar = ({ user, onLogout }) => {
                             Employees
                         </Link>
                         {user?.role === 'admin' && (
-                            <Link to="/add-employee" className="block px-4 py-2 rounded-lg text-base font-medium text-gray-600 hover:bg-gray-50">
-                                Add Employee
-                            </Link>
+                            <>
+                                <Link to="/add-employee" className="block px-4 py-2 rounded-lg text-base font-medium text-gray-600 hover:bg-gray-50">
+                                    Add Employee
+                                </Link>
+                                <Link to="/departments" className="block px-4 py-2 rounded-lg text-base font-medium text-gray-600 hover:bg-gray-50">
+                                    Departments
+                                </Link>
+                            </>
                         )}
                         <button
                             onClick={handleLogout}
