@@ -19,7 +19,6 @@ try {
     exit;
 }
 
-// Validate required fields
 $requiredFields = ['name', 'email', 'department_id', 'position', 'hire_date', 'salary', 'address'];
 foreach ($requiredFields as $field) {
     if (empty($_POST[$field])) {
@@ -28,7 +27,6 @@ foreach ($requiredFields as $field) {
     }
 }
 
-// Sanitize input
 $name = sanitize_input($_POST['name']);
 $email = sanitize_input($_POST['email']);
 $phone = isset($_POST['phone']) ? sanitize_input($_POST['phone']) : null;
@@ -39,7 +37,6 @@ $salary = sanitize_input($_POST['salary']);
 $address = sanitize_input($_POST['address']);
 $status = isset($_POST['status']) ? sanitize_input($_POST['status']) : 'active';
 
-// Validate department ID
 $stmt = $pdo->prepare("SELECT id FROM departments WHERE id = ?");
 $stmt->execute([$department_id]);
 if ($stmt->rowCount() === 0) {
@@ -47,7 +44,6 @@ if ($stmt->rowCount() === 0) {
     exit;
 }
 
-// Handle profile image upload
 $profile_image = null;
 if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] === UPLOAD_ERR_OK) {
     $uploadDir = '../uploads/';
@@ -71,7 +67,6 @@ if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] === UPL
     $profile_image = $filename;
 }
 
-// Insert employee into database
 try {
     $stmt = $pdo->prepare("
         INSERT INTO employees (name, email, phone, department_id, position, hire_date, salary, address, profile_image, status)
@@ -80,7 +75,6 @@ try {
     $stmt->execute([$name, $email, $phone, $department_id, $position, $hire_date, $salary, $address, $profile_image, $status]);
     $employee_id = $pdo->lastInsertId();
 
-    // Log activity
     $action = 'Added employee';
     $description = "Added $name to department ID $department_id as $position";
     $ip_address = $_SERVER['REMOTE_ADDR'] ?? 'unknown';

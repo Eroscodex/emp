@@ -8,7 +8,7 @@ const SignUp = () => {
     password: '',
     email: '',
     full_name: '',
-    role: 'admin' // Default and only role
+    role: 'admin' 
   });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -57,17 +57,17 @@ const SignUp = () => {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Video */}
+      
       <video
         autoPlay
         loop
         muted
         className="absolute inset-0 w-full h-full object-cover z-0"
-        src="/background.mp4" // Change to your video path
+        src="/background.mp4"
       />
-      {/* Overlay */}
+  
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm z-10" />
-      {/* Sign Up Card */}
+ 
       <div className="relative z-20 w-full max-w-md mx-auto p-2 sm:p-0">
         <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl p-8 md:p-10 border border-blue-100">
           <h1 className="text-3xl font-extrabold text-blue-800 text-center mb-6 tracking-tight drop-shadow">Create Account</h1>

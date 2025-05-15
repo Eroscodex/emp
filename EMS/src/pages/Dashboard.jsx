@@ -72,17 +72,10 @@ const Dashboard = ({ user = { role: 'user' } }) => {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Video */}
-      <video
-        autoPlay
-        loop
-        muted
-        className="absolute inset-0 w-full h-full object-cover z-0"
-        src="/background.mp4" // Change to your video path
-      />
-      {/* Overlay */}
+      <video autoPlay loop muted playsInline className="fixed top-0 left-0 w-full h-full object-cover z-0">
+        <source src="/src/assets/bg.mov" type="video/mp4" />
+      </video>
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm z-10" />
-      {/* Main Content */}
       <div className="relative z-20 w-full max-w-6xl mx-auto p-2 sm:p-6 flex flex-col gap-8">
         <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl p-6 md:p-10 flex flex-col items-center mb-2 border border-blue-100">
           <h1 className="text-3xl md:text-4xl font-extrabold text-blue-800 text-center mb-2 tracking-tight drop-shadow">Dashboard</h1>
@@ -94,12 +87,15 @@ const Dashboard = ({ user = { role: 'user' } }) => {
           </div>
           <div className="bg-gradient-to-br from-green-100 to-green-50/80 rounded-xl shadow-lg p-6 border border-green-200">
             <h2 className="text-lg font-bold text-green-700 mb-1">Recent Hires</h2>
-            {stats.recentHires.length > 0 ? (
+            {stats.recentHires && stats.recentHires.length > 0 ? (
               <ul className="list-disc pl-5 space-y-2">
                 {stats.recentHires.map((hire, index) => (
                   <li key={index} className="text-gray-800">
-                    <span className="font-semibold text-green-800">{hire.name}</span> - {hire.position} <span className="text-gray-500">({hire.department})</span><br />
-                    <span className="text-xs text-gray-500">Hired on: {new Date(hire.hire_date).toLocaleDateString()}</span>
+                    <span className="font-semibold text-green-800">{hire.name}</span> - {hire.position} <span className="text-gray-500">({hire.department})</span>
+                    <br />
+                    <span className="text-xs text-gray-500">
+                      Hired on: {hire.hire_date ? new Date(hire.hire_date).toLocaleDateString() : 'N/A'}
+                    </span>
                   </li>
                 ))}
               </ul>

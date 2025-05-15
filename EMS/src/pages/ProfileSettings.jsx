@@ -21,26 +21,22 @@ const ProfileSettings = ({ user, setUser }) => {
     setSuccess('');
 
     try {
-      // Validate passwords match if changing password
       if (formData.new_password && formData.new_password !== formData.confirm_password) {
         setError('New passwords do not match');
         setIsLoading(false);
         return;
       }
 
-      // Only send fields that have been changed
       const dataToSend = {};
       if (formData.username !== user.username) dataToSend.username = formData.username;
       if (formData.email !== user.email) dataToSend.email = formData.email;
       if (formData.full_name !== user.full_name) dataToSend.full_name = formData.full_name;
 
-      // Include password fields if provided
       if (formData.current_password && formData.new_password) {
         dataToSend.current_password = formData.current_password;
         dataToSend.new_password = formData.new_password;
       }
 
-      // Only proceed if there are changes
       if (Object.keys(dataToSend).length === 0) {
         setError('No changes to update');
         setIsLoading(false);
@@ -60,11 +56,11 @@ const ProfileSettings = ({ user, setUser }) => {
 
       if (response.data.success) {
         setSuccess('Profile updated successfully');
-        // Update local storage with new user data
+  
         localStorage.setItem('user', JSON.stringify(response.data.user));
-        // Update user state
+        
         setUser(response.data.user);
-        // Clear password fields
+        
         setFormData(prev => ({
           ...prev,
           current_password: '',
@@ -84,19 +80,19 @@ const ProfileSettings = ({ user, setUser }) => {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Video */}
+     
       <video
         autoPlay
         loop
         muted
         className="absolute inset-0 w-full h-full object-cover z-0"
-        src="/background.mp4" // Change to your video path
+        src="/background.mp4"
       />
-      {/* Overlay */}
+      
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm z-10" />
-      {/* Main Card */}
+
       <div className="relative z-20 w-full max-w-2xl mx-auto p-4 sm:p-8">
-        {/* Header Card */}
+       
         <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-xl p-6 text-white mb-8 bg-opacity-90">
           <div className="flex items-center justify-between">
             <div>
@@ -111,7 +107,6 @@ const ProfileSettings = ({ user, setUser }) => {
           </div>
         </div>
 
-        {/* Form Card */}
         <div className="bg-white/80 backdrop-blur-md rounded-xl shadow-xl p-6">
           {error && (
             <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-600 rounded-lg flex items-center">
@@ -133,7 +128,6 @@ const ProfileSettings = ({ user, setUser }) => {
 
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Basic Information */}
               <div className="md:col-span-2">
                 <h3 className="text-lg font-semibold text-gray-800 mb-4">Basic Information</h3>
               </div>
@@ -170,7 +164,6 @@ const ProfileSettings = ({ user, setUser }) => {
                   autoComplete="email"
                 />
               </div>
-              {/* Password Section */}
               <div className="md:col-span-2 pt-6 border-t border-gray-200">
                 <h3 className="text-lg font-semibold text-gray-800 mb-4">Change Password</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

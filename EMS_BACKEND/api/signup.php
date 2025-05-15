@@ -20,7 +20,6 @@ if (!isset($data['username']) || !isset($data['password']) || !isset($data['emai
     exit;
 }
 
-// Validate input
 $username = sanitize_input($data['username']);
 $email = sanitize_input($data['email']);
 $password = $data['password'];
@@ -39,7 +38,6 @@ if (strlen($password) < 6) {
 try {
     error_log("Checking for existing username and email");
     
-    // Check if username exists
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = ?");
     $stmt->execute([$username]);
     if ($stmt->fetchColumn() > 0) {
@@ -48,7 +46,6 @@ try {
         exit;
     }
 
-    // Check if email exists
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE email = ?");
     $stmt->execute([$email]);
     if ($stmt->fetchColumn() > 0) {
@@ -57,7 +54,6 @@ try {
         exit;
     }
 
-    // Insert new user
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     $stmt = $pdo->prepare("INSERT INTO users (username, password, email, full_name, role, is_active) VALUES (?, ?, ?, ?, ?, true)");
     $stmt->execute([$username, $hashedPassword, $email, $full_name, $role]);

@@ -1,9 +1,8 @@
 <?php
-// Enable error reporting for development
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Database configuration
+
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'employee_management');
 define('DB_USER', 'root');
@@ -25,7 +24,6 @@ try {
     die(json_encode(['success' => false, 'message' => 'Database connection failed']));
 }
 
-// Function to sanitize input data
 function sanitize_input($data) {
     return htmlspecialchars(strip_tags(trim($data)));
 }
@@ -33,7 +31,7 @@ function sanitize_input($data) {
 function validateToken() {
     global $pdo;
 
-    // Try to get headers in a way that works on all servers
+
     if (function_exists('getallheaders')) {
         $headers = getallheaders();
     } else {
@@ -46,7 +44,7 @@ function validateToken() {
         }
     }
 
-    // Support both 'Authorization' and 'authorization'
+
     $authHeader = null;
     if (isset($headers['Authorization'])) {
         $authHeader = $headers['Authorization'];
@@ -73,7 +71,7 @@ function validateToken() {
         throw new Exception('Invalid or expired token');
     }
 
-    // Verify user in the database
+
     $stmt = $pdo->prepare("SELECT is_active FROM users WHERE username = ?");
     $stmt->execute([$decoded['username']]);
     $user = $stmt->fetch();
@@ -92,7 +90,7 @@ function validateToken() {
     return $decoded;
 }
 
-// Function to log user activity
+
 function logActivity($userId, $action, $entityType = null, $entityId = null, $details = null) {
     global $pdo;
     try {
@@ -111,13 +109,13 @@ function logActivity($userId, $action, $entityType = null, $entityId = null, $de
     }
 }
 
-// Set response headers
+
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: http://localhost:5173');
 header('Access-Control-Allow-Methods: POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
-// Handle preflight requests
+
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit;

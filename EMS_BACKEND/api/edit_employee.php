@@ -11,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-// Validate token
 try {
     $user = validateToken();
 } catch (Exception $e) {
@@ -46,7 +45,6 @@ try {
     $address = sanitize_input($_POST['address']);
     $status = sanitize_input($_POST['status']);
 
-    // Validate department ID
     $stmt = $pdo->prepare("SELECT id FROM departments WHERE id = ?");
     $stmt->execute([$department_id]);
     if ($stmt->rowCount() === 0) {
@@ -54,13 +52,11 @@ try {
         exit;
     }
 
-    // Prepare SQL for updating employee
     $sql = "UPDATE employees SET 
             name = ?, email = ?, phone = ?, department_id = ?, 
             position = ?, hire_date = ?, salary = ?, address = ?, status = ?";
     $params = [$name, $email, $phone, $department_id, $position, $hire_date, $salary, $address, $status];
 
-    // Handle profile image upload if provided
     if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = '../uploads/';
         $filename = uniqid() . '_' . basename($_FILES['profile_image']['name']);
@@ -78,14 +74,10 @@ try {
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
 
-    // Log activity
-    logActivity(
-        $user['id'],
-        'Updated employee',
-        'employee',
-        $id,
-        ['changes' => 'Employee details updated']
-    );
+    $description = "Updated $name (ID: $id) in department ID $department_id as $position";
+    $ip_address = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+    $stmt = $pdo->prepare("INSERT INTO activity_logs (user_id, action, description, ip_address) VALUES (?, ?, ?, ?)");
+    $stmt->execute([$user['id'], 'Updated employee', $description, $ip_address]);
 
     $pdo->commit();
 

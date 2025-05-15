@@ -92,7 +92,7 @@ const AddEmployee = () => {
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
       <video autoPlay loop muted playsInline className="fixed top-0 left-0 w-full h-full object-cover z-0">
-        <source src="/bg.mp4" type="video/mp4" />
+        <source src="/src/assets/bg.mov" type="video/mp4" />
       </video>
       <div className="absolute inset-0 bg-gradient-to-br from-green-700/70 via-green-400/30 to-white/80 z-10"></div>
       <div className="relative z-20 p-4 sm:p-8 min-h-screen flex items-center justify-center">

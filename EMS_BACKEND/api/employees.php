@@ -11,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once __DIR__ . '/../db.php';
 
-// Validate user token
 try {
     $user = validateToken();
 } catch (Exception $e) {
@@ -20,7 +19,6 @@ try {
     exit;
 }
 
-// GET: Fetch employees or specific employee by ID
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     try {
         if (isset($_GET['id'])) {
@@ -69,7 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     exit;
 }
 
-// POST: Add new employee
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $requiredFields = ['name', 'email', 'department_id', 'position', 'hire_date', 'salary', 'address'];
@@ -135,7 +132,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-// DELETE: Delete employee
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     $employee_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
@@ -155,7 +151,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     exit;
 }
 
-// Method not allowed fallback
 http_response_code(405);
 echo json_encode(['success' => false, 'message' => 'Method not allowed']);
 ?>

@@ -151,20 +151,10 @@ const EditEmployee = () => {
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
-      {/* Background Video */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="fixed top-0 left-0 w-full h-full object-cover z-0"
-      >
-        <source src="/bg.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
+      <video autoPlay loop muted playsInline className="fixed top-0 left-0 w-full h-full object-cover z-0">
+        <source src="/src/assets/bg.mov" type="video/mp4" />
       </video>
-      {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900/70 via-blue-400/30 to-white/80 z-10"></div>
-      {/* Main Content */}
       <div className="relative z-20 p-4 sm:p-8 min-h-screen flex items-center justify-center">
         <div className="w-full max-w-2xl mx-auto bg-white/90 rounded-2xl shadow-2xl p-4 sm:p-8 backdrop-blur-md">
           <div className="flex justify-between items-center mb-6">

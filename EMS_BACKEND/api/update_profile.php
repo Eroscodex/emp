@@ -11,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once __DIR__ . '/../db.php';
 
-// Validate user token
 try {
     $user = validateToken();
 } catch (Exception $e) {
@@ -25,7 +24,6 @@ if (!$user) {
     exit;
 }
 
-// Get input data
 $data = json_decode(file_get_contents("php://input"), true);
 
 try {
@@ -34,7 +32,7 @@ try {
     $updates = [];
     $params = [];
     
-    // Handle basic info updates
+
     if (!empty($data['username'])) {
         $updates[] = "username = ?";
         $params[] = $data['username'];
@@ -50,9 +48,8 @@ try {
         $params[] = $data['full_name'];
     }
 
-    // Handle password update
     if (!empty($data['current_password']) && !empty($data['new_password'])) {
-        // Verify current password
+  
         $stmt = $pdo->prepare("SELECT password FROM users WHERE id = ?");
         $stmt->execute([$user['id']]);
         $userRecord = $stmt->fetch();
@@ -71,16 +68,13 @@ try {
         echo json_encode(['success' => false, 'message' => 'No changes to update']);
         exit;
     }
-    
-    // Add user ID to params
+  
     $params[] = $user['id'];
     
-    // Update user
     $sql = "UPDATE users SET " . implode(", ", $updates) . " WHERE id = ?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
     
-    // Get updated user data
     $stmt = $pdo->prepare("SELECT id, username, email, full_name, role FROM users WHERE id = ?");
     $stmt->execute([$user['id']]);
     $updatedUser = $stmt->fetch();

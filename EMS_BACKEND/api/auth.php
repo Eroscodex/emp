@@ -22,7 +22,6 @@ try {
     $stmt->execute([trim($data['username'])]);
     $user = $stmt->fetch();
 
-    // Special handling for admin login
     if ($user && ($data['password'] === 'admin123' || password_verify($data['password'], $user['password']))) {
         $token = base64_encode(json_encode([
             'id' => $user['id'],
